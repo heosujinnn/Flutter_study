@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/common/component/custom_text_form_field.dart';
+import 'package:flutter_practice/user/view/login_screen.dart';
 
 void main() {
   runApp(
@@ -7,16 +9,16 @@ void main() {
 }
 
 class _App extends StatelessWidget {
-  const _App({super.key});
+  const _App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(),
+      theme: ThemeData(
+        fontFamily: 'NotoSans',
       ),
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
     );
   }
 }
-
