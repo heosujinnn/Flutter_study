@@ -5,9 +5,18 @@ import 'package:flutter_practice/common/component/custom_text_form_field.dart';
 import 'package:flutter_practice/common/const/colors.dart';
 import 'package:flutter_practice/common/layout/default_layout.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_practice/common/view/root_tab.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +33,7 @@ class LoginScreen extends StatelessWidget {
         top: true,
         bottom: false,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -39,21 +48,26 @@ class LoginScreen extends StatelessWidget {
               ),
               CustomTextFormField(
                 hintText: '이메일을 입력해주세요.',
-                onChanged: (String value) {},
+                onChanged: (String value) {
+                  username = value;
+                },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               CustomTextFormField(
                 hintText: '비밀번호를 입력해주세요.',
-                onChanged: (String value) {},
+                onChanged: (String value) {
+                  password = value;
+                },
                 obscureText: true,
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () async {
                     // ID:비밀번호
-                    final rawString = 'test@codefactory.ai:testtest';
+                    final rawString = '$username:$password';
+                    //print(rawString);
 
                     // 플러터에서 인코딩 하는 법
                     Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -67,6 +81,9 @@ class LoginScreen extends StatelessWidget {
                         },
                       ),
                     );
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) => const RootTab()));
+
                     print(resp.data);
                   },
                   style:
@@ -77,8 +94,8 @@ class LoginScreen extends StatelessWidget {
               ),
               TextButton(
                   onPressed: () async {
-
-                    const refreshToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTcxOTQyNDA3NiwiZXhwIjoxNzE5NTEwNDc2fQ.-PvGLrljjFaHocTE8OpJ1WuX3ynHCGeE1CeQVCtOIUU';
+                    const refreshToken =
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTcxOTQyNDA3NiwiZXhwIjoxNzE5NTEwNDc2fQ.-PvGLrljjFaHocTE8OpJ1WuX3ynHCGeE1CeQVCtOIUU';
                     final resp = await dio.post(
                       'http://$ip/auth/token',
                       options: Options(
