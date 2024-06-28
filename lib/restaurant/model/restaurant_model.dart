@@ -12,8 +12,8 @@ class RestaurantModel {
   final int deliveryFee;
   final double ratings;
 
-  RestaurantModel(
-      {required this.id,
+  RestaurantModel({
+      required this.id,
       required this.name,
       required this.thumbUrl,
       required this.tags,

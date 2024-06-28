@@ -35,7 +35,9 @@ class RestaurantScreen extends StatelessWidget {
                 //print(snapshot.error); // 토큰 만료됐으니까 401에러 뜸.
                 //print(snapshot.data);
                 if (!snapshot.hasData) {
-                  return Container();
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
                 return ListView.separated(
                   itemCount: snapshot.data!.length,
@@ -45,7 +47,8 @@ class RestaurantScreen extends StatelessWidget {
 
                     return GestureDetector(
                       onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RestaurantDetailScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_)=>RestaurantDetailScreen(id: pItem.id,)));
                       },
                       child: RestaurantCard.fromModel(
                         model : pItem
