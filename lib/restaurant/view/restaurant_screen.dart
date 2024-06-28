@@ -3,6 +3,7 @@ import 'package:flutter_practice/restaurant/component/restaurant_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_practice/common/const/data.dart';
 import 'package:flutter_practice/restaurant/model/restaurant_model.dart';
+import 'package:flutter_practice/restaurant/view/restaurant_detail_screen.dart';
 
 class RestaurantScreen extends StatelessWidget {
   const RestaurantScreen({super.key});
@@ -42,8 +43,13 @@ class RestaurantScreen extends StatelessWidget {
                     final item = snapshot.data![index];
                     final pItem=RestaurantModel.fromJson(json: item);
 
-                    return RestaurantCard.fromModel(
-                      model : pItem
+                    return GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RestaurantDetailScreen()));
+                      },
+                      child: RestaurantCard.fromModel(
+                        model : pItem
+                      ),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {

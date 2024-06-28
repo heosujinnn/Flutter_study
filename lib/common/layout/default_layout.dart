@@ -13,7 +13,6 @@ class DefaultLayout extends StatelessWidget {
     this.backgroundColor,
     this.title,
     this.bottomNavbar,
-
   });
 
   @override
@@ -27,21 +26,17 @@ class DefaultLayout extends StatelessWidget {
   }
 
   AppBar? renderAppbar() {
-    if(title==null){
+    if (title == null) {
       return null;
-    }
-    else{
+    } else {
       return AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Center(
-          child: Text(
-            title!,
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-
-            ),
+        title: Text(
+          title!,
+          style: const TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w500,
           ),
         ),
         foregroundColor: Colors.black,
