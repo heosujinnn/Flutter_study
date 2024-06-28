@@ -37,10 +37,15 @@ class _SplashScreenState extends State<SplashScreen> {
           },
         ),
       );
+      //발급 받은 토큰 저장 : 앱 재 실행 시 토큰 갱신되게 한거임.
+      //바디 값 안의 어세스 토큰을 저장
+      await storage.write(key: ACCESS_TOKEN_KEY, value: resp.data['accessToken']);
+
+      
       // 토큰 정상 200 이면 로그인페이지로
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
-    }
+     }
     // 만료 됐으면 로그인페이지로
     catch (e) {
       Navigator.of(context).pushAndRemoveUntil(
