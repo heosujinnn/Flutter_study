@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/restaurant/component/restaurant_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_practice/common/const/data.dart';
+import 'package:flutter_practice/restaurant/model/restaurant_model.dart';
 
 class RestaurantScreen extends StatelessWidget {
   const RestaurantScreen({super.key});
@@ -32,32 +33,24 @@ class RestaurantScreen extends StatelessWidget {
               builder: (context, AsyncSnapshot<List> snapshot) {
                 //print(snapshot.error); // 토큰 만료됐으니까 401에러 뜸.
                 //print(snapshot.data);
-                if (!snapshot.hasData){
+                if (!snapshot.hasData) {
                   return Container();
                 }
                 return ListView.separated(
                   itemCount: snapshot.data!.length,
-                  itemBuilder: (_,index){
-                    final item=snapshot.data![index];
-                    return RestaurantCard(
-                      // image: Image.asset(
-                      //   'asset/img/food/ddeok_bok_gi.jpg',
-                      //   fit: BoxFit.cover,
-                      // ),
-                      image: Image.network(
-                        'http://$ip${item['thumbUrl']}',
-                        fit: BoxFit.cover,
-                      ),
-                      name: item['name'],
-                      tags: List<String>.from(item['tags']),
-                      ratingsCount: item['ratingsCount'],
-                      deliveryTime: item['deliveryTime'],
-                      deliveryFee:item['deliveryFee'],
-                      ratings: item['ratings'],
+                  itemBuilder: (_, index) {
+                    final item = snapshot.data![index];
+                    final pItem=RestaurantModel.fromJson(json: item);
+
+                    return RestaurantCard.fromModel(
+                      model : pItem
                     );
-                  }, separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 8,);
-                },
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 8,
+                    );
+                  },
                 );
               },
             )),
